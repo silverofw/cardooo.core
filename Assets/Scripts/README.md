@@ -3,7 +3,5 @@ Cardooo Core
 
 Core!
 
-![](https://i.imgur.com/hz1Hltb.gif)
-
 <br><br>
-**[Facebook](https://www.facebook.com/cardocardooo).**
+**![](https://imgur.com/AnJYLLc) [Facebook](https://www.facebook.com/cardocardooo)**
