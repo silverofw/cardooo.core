@@ -4,4 +4,4 @@ Cardooo Core
 Core!
 
 <br><br>
-**![](https://imgur.com/AnJYLLc) [Facebook](https://www.facebook.com/cardocardooo)**
+**![](https://i.imgur.com/AnJYLLc.jpg) [Facebook](https://www.facebook.com/cardocardooo)**
