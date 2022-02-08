@@ -1,0 +1,9 @@
+{
+	"name": "cardooo.core",
+	"displayName": "Core",
+	"description": "Core!",
+	"version": "1.0.0",
+	"unity": "2020.3.25f1",
+	"license": "MIT",
+	"dependencies": {}
+}
