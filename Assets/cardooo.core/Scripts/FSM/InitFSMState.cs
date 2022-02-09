@@ -6,7 +6,7 @@ namespace cardooo.core
     {
         public virtual void StateBegin()
         {
-
+            DLog.Log($"[InitFSMState][StateBegin]");
         }
 
         public virtual void StateEnd()
