@@ -5,5 +5,16 @@
 	"version": "1.0.1",
 	"unity": "2020.3",
 	"license": "MIT",
-	"dependencies": {}
+	"dependencies": {},
+	"keywords": [
+    "Framework",
+    "Unity"
+  ],
+  "author": {
+    "name": "cardooo",
+    "email": "silverofw@gmail.com",
+    "url": "https://www.facebook.com/cardocardooo"
+  },
+  "type": "tool",
+  "hideInEditor": false
 }
