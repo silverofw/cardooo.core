@@ -23,7 +23,7 @@ namespace cardooo.core
             ComDic.Clear();
         }
 
-        public void AddComponent(EntityComponent component)
+        public void AddC(EntityComponent component)
         {
             ComDic.TryGetValue(component.GetType(), out EntityComponent com);
             if (com == null)
@@ -36,7 +36,7 @@ namespace cardooo.core
             }
         }
 
-        public T GetEntityComp<T>() where T : EntityComponent
+        public T GetC<T>() where T : EntityComponent
         {
             ComDic.TryGetValue(typeof(T), out EntityComponent com);
             if (com == null)

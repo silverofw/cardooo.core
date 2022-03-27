@@ -10,7 +10,7 @@ namespace cardooo.core
 
         public T Create<T>(int configId) where T : Entity
         {
-            object[] paramArray = new object[] { NextEntityId , configId };
+            object[] paramArray = new object[] { NextEntityId };
             T t = (T)Activator.CreateInstance(typeof(T), args: paramArray);
             EntityDic.Add(NextEntityId, t);
             NextEntityId++;
