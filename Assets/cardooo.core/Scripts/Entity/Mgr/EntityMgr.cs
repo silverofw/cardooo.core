@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace cardooo.core
 {
@@ -33,9 +34,11 @@ namespace cardooo.core
         public void Reset()
         {
             NextEntityId = 1;
-            foreach (var v in EntityDic)
+            List<Entity> dic = EntityDic.Values.ToList();
+
+            foreach (var v in dic)
             {
-                DeleteEntity(v.Value);
+                DeleteEntity(v);
             }
             EntityDic.Clear();
         }
