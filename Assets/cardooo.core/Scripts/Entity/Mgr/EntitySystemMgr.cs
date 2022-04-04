@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 namespace cardooo.core
 {
@@ -48,6 +49,11 @@ namespace cardooo.core
                 entitySystemDatas[typeof(T)].RemoveEntity(entity);
                 //DebugHandler.Log($"[RemoveEntityInSystem] {typeof(T)} : {entitySystemDatas[typeof(T)].entityList.Count}");
             }
+        }
+
+        public void Reset()
+        {
+            entitySystemDatas = new Dictionary<Type, EntitySystem>();
         }
     }
 }
