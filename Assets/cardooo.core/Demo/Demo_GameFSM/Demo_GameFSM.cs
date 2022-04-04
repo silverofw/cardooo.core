@@ -21,5 +21,6 @@ public class Demo_GameFSM : MonoBehaviour
     private void OnDestroy()
     {
         EntityMgr.Instance.Reset();
+        EntitySystemMgr.Instance.Reset();
     }
 }
