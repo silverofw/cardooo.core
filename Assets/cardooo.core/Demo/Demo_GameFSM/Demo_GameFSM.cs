@@ -9,12 +9,17 @@ public class Demo_GameFSM : MonoBehaviour
     void Start()
     {
         GameFSM fsm = new GameFSM();
-        var e = EntityMgr.Instance.Create<Entity>(0);
+        var e = EntityMgr.Instance.Create<Entity>();
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    private void OnDestroy()
+    {
+        EntityMgr.Instance.Reset();
     }
 }
