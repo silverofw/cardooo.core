@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using cardooo.core;
@@ -15,7 +15,7 @@ public class Demo_GameFSM : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        EventMgr.Instance.MainHandler.Send(0);
     }
 
     private void OnDestroy()
