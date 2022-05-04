@@ -1,9 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace cardooo.core
 {
-    public class Entity
+    public class Entity : IDisposable
     {
         public ulong Id = 0;
         public Dictionary<System.Type, EntityComponent> ComDic = new Dictionary<System.Type, EntityComponent>();
@@ -12,6 +13,14 @@ namespace cardooo.core
         public Entity(ulong id)
         {
             Id = id;
+        }
+        ~Entity()
+        {
+            DLog.Log($"[{Id}] see you~");
+        }
+        public void Dispose()
+        {
+            DLog.Log($"[{Id}][Dispose]");
         }
 
         public void Terminate()

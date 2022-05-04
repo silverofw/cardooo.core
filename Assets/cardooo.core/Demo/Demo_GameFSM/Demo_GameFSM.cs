@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using cardooo.core;
+using System;
 
 public class Demo_GameFSM : MonoBehaviour
 {
@@ -9,7 +8,10 @@ public class Demo_GameFSM : MonoBehaviour
     void Start()
     {
         GameFSM fsm = new GameFSM();
-        var e = EntityMgr.Instance.Create<Entity>();
+        Entity e = EntityMgr.Instance.Create<Entity>();
+        EntityMgr.Instance.DeleteEntity(e);
+
+        Debug.Log($"{e.Id}");
     }
 
     // Update is called once per frame

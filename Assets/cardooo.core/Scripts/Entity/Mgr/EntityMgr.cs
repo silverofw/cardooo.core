@@ -20,10 +20,9 @@ namespace cardooo.core
 
         public void DeleteEntity(Entity entity)
         {
-            if (EntityDic.ContainsKey(entity.Id))
+            if (EntityDic.Remove(entity.Id))
             {
                 entity.Terminate();
-                EntityDic.Remove(entity.Id);
             }
             else
             {
