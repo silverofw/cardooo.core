@@ -67,6 +67,7 @@ namespace cardooo.core
             {
                 curCount++;
                 var obj = GameObject.Instantiate(prefabGo, poolRoot.transform);
+                obj.SetActive(false);
                 obj.name = path;
                 poolObjList.Add(obj);
             }
