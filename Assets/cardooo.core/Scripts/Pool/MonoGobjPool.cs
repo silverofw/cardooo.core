@@ -30,7 +30,7 @@ namespace cardooo.core
             ResizePool();
         }
 
-        public GameObject Get(bool active = true, Transform parent = null)
+        public GameObject Get(bool active = true, Transform parent = null, Vector3 pos = default, Vector3 rot = default)
         {
             if (poolObjList.Count == 0)
             {
@@ -41,6 +41,8 @@ namespace cardooo.core
             poolObjList.RemoveAt(0);
             activeObjList.Add(go);
             go.transform.SetParent(parent == null ? activeRoot.transform : parent);
+            go.transform.position = pos;
+            go.transform.eulerAngles = rot;
             go.SetActive(active);
             return go;
         }
