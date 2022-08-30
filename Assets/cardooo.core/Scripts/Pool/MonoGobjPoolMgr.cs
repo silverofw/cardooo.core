@@ -7,7 +7,7 @@ namespace cardooo.core
     {
         GameObject Root = null;
 
-        public Dictionary<string, MonoGobjPool> Dic { get; } = new Dictionary<string, MonoGobjPool>();
+        Dictionary<string, MonoGobjPool> Dic = new Dictionary<string, MonoGobjPool>();
 
         protected override void Init()
         {
@@ -28,6 +28,11 @@ namespace cardooo.core
             }
 
             return pool;
+        }
+
+        public void Recycle(GameObject obj)
+        {
+            Dic[obj.name].Recycle(obj);
         }
     }
 }

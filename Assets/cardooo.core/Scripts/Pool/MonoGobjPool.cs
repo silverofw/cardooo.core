@@ -6,7 +6,7 @@ namespace cardooo.core
     public class MonoGobjPool
     {
         string path = "";
-        GameObject prefabGo = null;
+        public GameObject prefabGo { get; }
         int count = 0;
 
         GameObject poolRoot = null;
@@ -66,7 +66,9 @@ namespace cardooo.core
             for (int i = 0; i < count; i++)
             {
                 curCount++;
-                poolObjList.Add(GameObject.Instantiate(prefabGo, poolRoot.transform));
+                var obj = GameObject.Instantiate(prefabGo, poolRoot.transform);
+                obj.name = path;
+                poolObjList.Add(obj);
             }
 
             poolRoot.name = $"[{path}][{poolObjList.Count}/{curCount}] Pool";
