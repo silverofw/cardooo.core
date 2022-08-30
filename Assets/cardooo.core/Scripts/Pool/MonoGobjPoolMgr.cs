@@ -7,7 +7,7 @@ namespace cardooo.core
     {
         GameObject Root = null;
 
-        Dictionary<string, MonoGobjPool> Dic = new Dictionary<string, MonoGobjPool>();
+        public Dictionary<string, MonoGobjPool> Dic { get; } = new Dictionary<string, MonoGobjPool>();
 
         protected override void Init()
         {
@@ -16,7 +16,7 @@ namespace cardooo.core
             Root = new GameObject();
             Root.name = "MonoGobjPoolRoot";
 
-            GameObject.DontDestroyOnLoad(Root);
+            Object.DontDestroyOnLoad(Root);
         }
 
         public MonoGobjPool CreatePool(string path, GameObject prefab, int count = 1)
