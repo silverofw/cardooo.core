@@ -6,7 +6,7 @@ namespace cardooo.core
     public class GobjPoolMgr : Singleton<GobjPoolMgr>
     {
         public const string uidSpilt = "]_";
-        int uid = 0;
+        public int Uid { get; private set; } = 0;
         GameObject Root = null;
 
         Dictionary<string, GobjPool> Dic = new Dictionary<string, GobjPool>();
@@ -45,8 +45,8 @@ namespace cardooo.core
 
         public int GetUid()
         {
-            uid += 1;
-            return uid;
+            Uid += 1;
+            return Uid;
         }
     }
 }

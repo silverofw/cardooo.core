@@ -60,8 +60,7 @@ namespace cardooo.core
         }
 
         void ResizePool()
-        {
-            DLog.Log($"[MonoGobjPool][ResizePool][{path}][{curCount} + {count}]");
+        {            
             for (int i = 0; i < count; i++)
             {
                 curCount++;
