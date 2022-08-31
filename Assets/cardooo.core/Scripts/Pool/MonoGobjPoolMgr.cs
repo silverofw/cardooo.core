@@ -5,6 +5,7 @@ namespace cardooo.core
 {
     public class MonoGobjPoolMgr : Singleton<MonoGobjPoolMgr>
     {
+        int uid = 0;
         GameObject Root = null;
 
         Dictionary<string, MonoGobjPool> Dic = new Dictionary<string, MonoGobjPool>();
@@ -32,7 +33,13 @@ namespace cardooo.core
 
         public void Recycle(GameObject obj)
         {
-            Dic[obj.name].Recycle(obj);
+            Dic[obj.name.Split('_')[1]].Recycle(obj);
+        }
+
+        public int GetUid()
+        {
+            uid += 1;
+            return uid;
         }
     }
 }

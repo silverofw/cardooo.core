@@ -19,20 +19,20 @@ namespace cardooo.core
         {
             if (!isOn)
                 return;
-            Debug.LogFormat(msg, args);
+            Debug.LogFormat($"[{Time.frameCount}] {msg}", args);
         }
 
         public static void LogError(string msg)
         {
             if (!isOn)
                 return;
-            Debug.LogError(msg);
+            Debug.LogError($"[{Time.frameCount}] {msg}");
         }
         public static void LogErrorFormat(string msg, params object[] args)
         {
             if (!isOn)
                 return;
-            Debug.LogErrorFormat(msg, args);
+            Debug.LogErrorFormat($"[{Time.frameCount}] {msg}", args);
         }
     }
 }
