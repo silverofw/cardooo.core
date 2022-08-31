@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace cardooo.core
 {
-    public class MonoGobjPool
+    public class GobjPool
     {
         string path = "";
         public GameObject prefabGo { get; }
@@ -16,7 +16,7 @@ namespace cardooo.core
 
         int curCount = 0;
 
-        public MonoGobjPool(string path, GameObject prefab, GameObject root, int count = 1)
+        public GobjPool(string path, GameObject prefab, GameObject root, int count = 1)
         {
             this.path = path;
             prefabGo = prefab;
@@ -31,15 +31,13 @@ namespace cardooo.core
         }
 
         public GameObject Get(bool active = true, Transform parent = null, Vector3 pos = default, Vector3 rot = default)
-        {
-            DLog.Log("[Get]");
+        {            
             if (poolObjList.Count == 0)
             {
                 ResizePool();
             }
             GameObject go = poolObjList[0];
-            poolObjList.RemoveAt(0);
-            DLog.Log("[Get] 2");
+            poolObjList.RemoveAt(0);            
             activeObjList.Add(go);
             go.transform.SetParent(parent == null ? activeRoot.transform : parent);
             go.transform.position = pos;
@@ -63,12 +61,12 @@ namespace cardooo.core
 
         void ResizePool()
         {
-            DLog.Log($"[MonoGobjPool][ResizePool][{path}][{curCount + count}]");
+            DLog.Log($"[MonoGobjPool][ResizePool][{path}][{curCount} + {count}]");
             for (int i = 0; i < count; i++)
             {
                 curCount++;
                 var obj = GameObject.Instantiate(prefabGo, poolRoot.transform);                
-                obj.name = $"{MonoGobjPoolMgr.Instance.GetUid()}_{path}";
+                obj.name = $"[{GobjPoolMgr.Instance.GetUid()}]_{path}";
                 poolObjList.Add(obj);
             }
 

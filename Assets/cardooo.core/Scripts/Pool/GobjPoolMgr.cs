@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 namespace cardooo.core
 {
-    public class MonoGobjPoolMgr : Singleton<MonoGobjPoolMgr>
+    public class GobjPoolMgr : Singleton<GobjPoolMgr>
     {
         int uid = 0;
         GameObject Root = null;
 
-        Dictionary<string, MonoGobjPool> Dic = new Dictionary<string, MonoGobjPool>();
+        Dictionary<string, GobjPool> Dic = new Dictionary<string, GobjPool>();
 
         protected override void Init()
         {
@@ -20,11 +20,11 @@ namespace cardooo.core
             Object.DontDestroyOnLoad(Root);
         }
 
-        public MonoGobjPool CreatePool(string path, GameObject prefab, int count = 1)
+        public GobjPool CreatePool(string path, GameObject prefab, int count = 1)
         {
-            if (!Dic.TryGetValue(path, out MonoGobjPool pool))
+            if (!Dic.TryGetValue(path, out GobjPool pool))
             {
-                pool = new MonoGobjPool(path, prefab, Root, count);
+                pool = new GobjPool(path, prefab, Root, count);
                 Dic.Add(path, pool);
             }
 
@@ -33,7 +33,7 @@ namespace cardooo.core
 
         public void Recycle(GameObject obj)
         {
-            Dic[obj.name.Split('_')[1]].Recycle(obj);
+            Dic[obj.name.Split("]_")[1]].Recycle(obj);
         }
 
         public int GetUid()
