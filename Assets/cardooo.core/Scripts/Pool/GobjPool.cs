@@ -65,7 +65,7 @@ namespace cardooo.core
             for (int i = 0; i < count; i++)
             {
                 curCount++;
-                var obj = GameObject.Instantiate(prefabGo, poolRoot.transform);                
+                var obj = GameObject.Instantiate(prefabGo, poolRoot.transform);              
                 obj.name = $"[{GobjPoolMgr.Instance.GetUid()}]_{path}";
                 poolObjList.Add(obj);
             }

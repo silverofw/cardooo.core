@@ -5,6 +5,7 @@ namespace cardooo.core
 {
     public class GobjPoolMgr : Singleton<GobjPoolMgr>
     {
+        public const string uidSpilt = "]_";
         int uid = 0;
         GameObject Root = null;
 
@@ -22,6 +23,12 @@ namespace cardooo.core
 
         public GobjPool CreatePool(string path, GameObject prefab, int count = 1)
         {
+            if (path.Contains(uidSpilt))
+            {
+                DLog.LogError($"[ERROR] path can not contain \"{uidSpilt}\"");
+                return null;
+            }
+
             if (!Dic.TryGetValue(path, out GobjPool pool))
             {
                 pool = new GobjPool(path, prefab, Root, count);
@@ -33,7 +40,7 @@ namespace cardooo.core
 
         public void Recycle(GameObject obj)
         {
-            Dic[obj.name.Split("]_")[1]].Recycle(obj);
+            Dic[obj.name.Split(uidSpilt)[1]].Recycle(obj);
         }
 
         public int GetUid()
