@@ -32,13 +32,14 @@ namespace cardooo.core
 
         public GameObject Get(bool active = true, Transform parent = null, Vector3 pos = default, Vector3 rot = default)
         {
+            DLog.Log("[Get]");
             if (poolObjList.Count == 0)
             {
                 ResizePool();
             }
-
             GameObject go = poolObjList[0];
             poolObjList.RemoveAt(0);
+            DLog.Log("[Get] 2");
             activeObjList.Add(go);
             go.transform.SetParent(parent == null ? activeRoot.transform : parent);
             go.transform.position = pos;
@@ -66,8 +67,7 @@ namespace cardooo.core
             for (int i = 0; i < count; i++)
             {
                 curCount++;
-                var obj = GameObject.Instantiate(prefabGo, poolRoot.transform);
-                obj.SetActive(false);
+                var obj = GameObject.Instantiate(prefabGo, poolRoot.transform);                
                 obj.name = path;
                 poolObjList.Add(obj);
             }

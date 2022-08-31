@@ -13,7 +13,7 @@ namespace cardooo.core
         {
             if (!isOn)
                 return;
-            Debug.Log(msg);
+            Debug.Log($"[{Time.frameCount}] {msg}");
         }
         public static void Log(string msg, params object[] args)
         {
