@@ -64,12 +64,30 @@ namespace cardooo.core
             for (int i = 0; i < count; i++)
             {
                 curCount++;
-                var obj = GameObject.Instantiate(prefabGo, poolRoot.transform);              
+                var obj = Object.Instantiate(prefabGo, poolRoot.transform);              
                 obj.name = $"[{GobjPoolMgr.Instance.GetUid()}]_{path}";
                 poolObjList.Add(obj);
             }
 
             poolRoot.name = $"[{path}][{poolObjList.Count}/{curCount}] Pool";
+        }
+
+        public void Clear()
+        {
+            foreach (var g in activeObjList)
+            {
+                Object.Destroy(g);
+            }
+            activeObjList.Clear();
+
+            foreach (var g in poolObjList)
+            {
+                Object.Destroy(g);
+            }
+            poolObjList.Clear();
+
+            Object.Destroy(activeRoot);
+            Object.Destroy(poolRoot);
         }
     }
 }

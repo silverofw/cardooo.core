@@ -43,6 +43,16 @@ namespace cardooo.core
             Dic[obj.name.Split(uidSpilt)[1]].Recycle(obj);
         }
 
+        public void Clear()
+        {
+            foreach (var pool in Dic)
+            {
+                pool.Value.Clear();
+            }
+
+            Dic.Clear();
+        }
+
         public int GetUid()
         {
             Uid += 1;
