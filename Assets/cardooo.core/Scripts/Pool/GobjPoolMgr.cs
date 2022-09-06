@@ -51,6 +51,7 @@ namespace cardooo.core
             }
 
             Dic.Clear();
+            Uid = 0;
         }
 
         public int GetUid()
