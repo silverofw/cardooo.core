@@ -9,7 +9,7 @@ namespace cardooo.math
         public static Vector2 GetPointOnCircleByAngle(Vector2 center, float radius, float angle)
         {            
             float x = center.x + radius * Mathf.Cos(angle * Mathf.PI / 180);
-            float y = center.x + radius * Mathf.Sin(angle * Mathf.PI / 180);
+            float y = center.y + radius * Mathf.Sin(angle * Mathf.PI / 180);
             return new Vector2(x, y);
         }
 
