@@ -82,6 +82,7 @@ namespace cardooo.core
 
             foreach (var g in poolObjList)
             {
+
                 Object.Destroy(g);
             }
             poolObjList.Clear();

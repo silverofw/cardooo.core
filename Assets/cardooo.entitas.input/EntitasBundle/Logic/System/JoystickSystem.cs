@@ -23,7 +23,7 @@ public class JoystickSystem : IExecuteSystem, IInitializeSystem
         leftJoystick.AddComponent(InputComponentsLookup.MoveJoystick, new MoveJoystickComponent()
         {
             tag = 0,
-            validArea = new Rect(0f,0f,Screen.width*0.5f,Screen.height*0.5f),
+            validArea = new Rect(0f, 0f, Screen.width * 0.5f, Screen.height * 0.5f),
             radius = 51,
             active = false,
             fingerId = -1,
@@ -35,7 +35,7 @@ public class JoystickSystem : IExecuteSystem, IInitializeSystem
         var rightJoystick = Contexts.sharedInstance.input.CreateEntity();
         rightJoystick.AddComponent(InputComponentsLookup.MoveJoystick, new MoveJoystickComponent()
         {
-            tag = 0,
+            tag = 1,
             validArea = new Rect(Screen.width * 0.5f, 0f, Screen.width * 0.35f, Screen.height * 0.5f),
             radius = 51,
             active = false,
@@ -66,7 +66,7 @@ public class JoystickSystem : IExecuteSystem, IInitializeSystem
             MoveJoystickComponent rightJoystick = null;
             if (rightJoystickEntity != null)
             {
-                leftJoystick = rightJoystickEntity.moveJoystick;
+                rightJoystick = rightJoystickEntity.moveJoystick;
             }
 
             foreach (var e in _entities)
@@ -75,7 +75,8 @@ public class JoystickSystem : IExecuteSystem, IInitializeSystem
                     continue;
 
                 if (e.touch.touchPhase == 0)
-                {                    
+                {
+
                     if (leftJoystick != null && leftJoystick.validArea.Contains(e.touch.startPos))
                     {
                         // Begin >> left
@@ -87,7 +88,7 @@ public class JoystickSystem : IExecuteSystem, IInitializeSystem
                         isLeftMove = true;
                     }
                     else if (rightJoystick != null && rightJoystick.validArea.Contains(e.touch.startPos))
-                    { 
+                    {
                         // Begin >> right
                         rightJoystick.fingerId = e.touch.fingerId;
                         rightJoystick.centerPos = e.touch.startPos;
@@ -99,17 +100,17 @@ public class JoystickSystem : IExecuteSystem, IInitializeSystem
                 }
                 else if (e.touch.touchPhase == 1)
                 {
-                    if (leftJoystick != null 
+                    if (leftJoystick != null
                         && leftJoystick.validArea.Contains(e.touch.startPos)
                         && leftJoystick.fingerId == e.touch.fingerId)
                     {
                         // move >> left
                         leftJoystick.direction = (e.touch.currentPos - e.touch.startPos).normalized;
-                        leftJoystick.currentPos = e.touch.startPos;
+                        leftJoystick.currentPos = e.touch.currentPos;
                         SetHostMoveInput(leftJoystick.direction);
                         isLeftMove = true;
                     }
-                    else if (rightJoystick != null 
+                    else if (rightJoystick != null
                         && rightJoystick.validArea.Contains(e.touch.startPos)
                         && rightJoystick.fingerId == e.touch.fingerId)
                     {
@@ -129,8 +130,9 @@ public class JoystickSystem : IExecuteSystem, IInitializeSystem
             SetHostMoveInput(Vector2.zero);
         }
 
-        if (isRightMove && _lastRightMove)
+        if (!isRightMove && _lastRightMove)
         {
+            // end right
             SetHostSkillInput(Vector2.zero, true);
         }
 
@@ -139,12 +141,51 @@ public class JoystickSystem : IExecuteSystem, IInitializeSystem
     }
 
     void SetHostMoveInput(Vector2 left)
-    { 
-        
+    {
+        /*
+        var host = Contexts.sharedInstance.game.GetEntityWithHost(1);
+        if (host != null && host.hasMoveDirection)
+        {
+            Vector2 leftMove = TransformMoveDir(left);
+            leftMove.Normalize();
+            if (leftMove.magnitude <= 0.1f)
+            {
+                leftMove = Vector2.zero;
+            }
+            host.moveDirection.value = (leftMove.x * Vector3.right + leftMove.y * Vector3.forward);
+        }
+        */
     }
 
     void SetHostSkillInput(Vector2 right, bool useSkill = false)
-    { 
-        
+    {
+        if (useSkill)
+        {
+            Debug.Log("[useSkill]");
+        }
+    }
+
+    bool GetCameraMoveDirection(ref Vector3 moveForward, ref Vector3 moveRight)
+    {
+        var mainCamera = Camera.main;
+        if (mainCamera == null)
+            return false;
+
+        var euler = mainCamera.transform.eulerAngles;
+        var cameraMoveSpace = Quaternion.Euler(0, euler.y, 0);
+        moveForward = cameraMoveSpace * Vector3.forward;
+        moveRight = cameraMoveSpace * Vector3.right;
+        return true;
+    }
+
+    Vector2 TransformMoveDir(Vector2 origin)
+    {
+        Vector3 moveForward = Vector3.zero, moveRight = Vector3.zero;
+        if (GetCameraMoveDirection(ref moveForward, ref moveRight))
+        {
+            var resultV3 = moveForward * origin.y + moveRight * origin.x;
+            return new Vector2(resultV3.x, resultV3.z);
+        }
+        return origin;
     }
 }
