@@ -87,7 +87,7 @@ public class PingPongMgr : MonoBehaviour
                 bool isCollision = false;
                 for (int j = 0; j < pingPongs.Length; j++)
                 {
-                    isCollision = pingPong.CollisionPingPong(pingPongs[j], time);
+                    isCollision = pingPong.CollisionPingPong(pingPongs[j], time, speed);
                 }
 
                 if (!isCollision)
