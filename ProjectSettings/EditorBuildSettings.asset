@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Test/Burst/Burst.unity
-    guid: 82a9c4fbace3c4281b4abbcba054f5f7
+    path: Assets/Test/PingPong/PingPong.unity
+    guid: 78f23d1a1fd784af08f0a76e92fdd905
   - enabled: 1
     path: Assets/Scene/OPEN.unity
     guid: 50e465cf683a6ca4898b483e77b07cbb

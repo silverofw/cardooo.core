@@ -1,50 +1,41 @@
 using UnityEngine;
 public class PingPong
 {
-    public double x = 0;
-    public double y = 0;
+    public float x = 0;
+    public float y = 0;
 
-    public double xdt = 0;
-    public double ydt = 0;
+    public float xdt = 0;
+    public float ydt = 0;
 
-    public PingPong lastCollision = null;
+    public bool isCollision = false;
 
-    public void move(double time)
+    public void move(float time)
     {
         x += xdt * time;
         y += ydt * time;
     }
 
-    public bool CollisionPingPong(PingPong pingPong, double time, float speed)
+    public void CollisionPingPong(PingPong pingPong, float time, float speed)
     {
-        if (lastCollision == pingPong)
-            return false;
+        if (isCollision)
+            return;
 
-        if (pingPong == this)
-            return false;
+        isCollision = true;
+        pingPong.isCollision = true;
 
-        var xDis = Mathf.Abs((float)(x - pingPong.x));
-        var yDis = Mathf.Abs((float)(y - pingPong.y));
-        if ((xDis + yDis) > 0.3f)
-        {
-            return false;
-        }
+        var twoPingVector = new Vector2(pingPong.x - x, pingPong.y - y);
 
-        lastCollision = pingPong;
-
-        var twoPingVector = new Vector2((float)(pingPong.x - x), (float)(pingPong.y - y));
-
-        var forceVector = new Vector2((float)xdt, (float)ydt);
+        var forceVector = new Vector2(xdt, ydt);
         float angle = Vector2.Angle(twoPingVector, forceVector);
-        var dis = Mathf.Sqrt(Mathf.Pow((float)xdt, 2) + Mathf.Pow((float)xdt, 2));
+        var dis = Mathf.Sqrt(Mathf.Pow(xdt, 2) + Mathf.Pow(xdt, 2));
         var targetDis = dis * Mathf.Cos(angle/180 * Mathf.PI);
         var target = twoPingVector.normalized * targetDis;
         var target2 = forceVector - target;
 
-        var twoPingVector2 = new Vector2((float)(x - pingPong.x), (float)(y - pingPong.y));
-        var forceVector2 = new Vector2((float)pingPong.xdt, (float)pingPong.ydt);
+        var twoPingVector2 = new Vector2(x - pingPong.x, y - pingPong.y);
+        var forceVector2 = new Vector2(pingPong.xdt, pingPong.ydt);
         float angle2 = Vector2.Angle(twoPingVector2, forceVector2);
-        var dis2 = Mathf.Sqrt(Mathf.Pow((float)pingPong.xdt, 2) + Mathf.Pow((float)pingPong.xdt, 2));
+        var dis2 = Mathf.Sqrt(Mathf.Pow(pingPong.xdt, 2) + Mathf.Pow(pingPong.xdt, 2));
         var targetDis2 = dis2 * Mathf.Cos(angle2 / 180 * Mathf.PI);
         var target3 = twoPingVector2.normalized * targetDis2;
         var target4 = forceVector2 - target3;
@@ -57,20 +48,30 @@ public class PingPong
         newdt = getNewdt(target, target4, speed);
         pingPong.xdt = newdt.x;
         pingPong.ydt = newdt.y;
+    }
 
-        //move(time * 2);
+    public bool canCollision(PingPong pingPong)
+    {
+        if (pingPong == this)
+            return false;
 
+        var xDis = Mathf.Abs((float)(x - pingPong.x));
+        var yDis = Mathf.Abs((float)(y - pingPong.y));
+        if ((xDis + yDis) > 0.3f)
+        {
+            return false;
+        }
         return true;
     }
 
     Vector2 getNewdt(Vector2 v1, Vector2 v2, float speed)
     {
         var newdt = v1 + v2;
-        newdt = newdt.normalized * speed;
+        newdt = newdt.normalized * speed * 0.6f;
         return newdt;
     }
 
-    public void CollisionWall(double w, double h)
+    public void CollisionWall(float w, float h)
     {
         if (x < 0)
         {
