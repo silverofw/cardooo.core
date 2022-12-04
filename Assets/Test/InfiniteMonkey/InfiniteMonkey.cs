@@ -8,7 +8,7 @@ using System.Collections.Concurrent;
 
 public class InfiniteMonkey : MonoBehaviour
 {
-    public int monkeyCount = 1;
+    public int MonkeyCount = 1;
     public string Target = "";
     
     Thread[] threads;
@@ -17,6 +17,8 @@ public class InfiniteMonkey : MonoBehaviour
     int minTypeTime;
 
     public static readonly ConcurrentQueue<Action> RunOnMainThread = new ConcurrentQueue<Action>();
+
+    Action<string> CallBack;
 
     List<char> list = new List<char> {
         'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k',
@@ -35,12 +37,20 @@ public class InfiniteMonkey : MonoBehaviour
     */
     [ContextMenu("MokeyType")]
     public void MokeyType()
+    {        
+        MokeyType(MonkeyCount, Target);
+    }
+
+
+    public void MokeyType(int monkeyCount, string targetString, Action<string> callBack = null)
     {
-        if (!check(Target))
+        if (!check(targetString))
         {
             DLog.LogError($"Have error char!");
             return;
         }
+
+        CallBack = callBack;
 
         if (threads != null)
         {
@@ -51,20 +61,19 @@ public class InfiniteMonkey : MonoBehaviour
             threads = null;
         }
 
-        DLog.Log($"[MokeyType][rate : {Mathf.Pow(list.Count, Target.Length)}]");
-                
+        DLog.Log($"[MokeyType][rate : {Mathf.Pow(list.Count, targetString.Length)}]");
+
         threads = new Thread[monkeyCount];
         typeTimes.Clear();
         maxTypeTime = int.MinValue;
         minTypeTime = int.MaxValue;
 
         for (int i = 0; i < monkeyCount; i++)
-        {           
-            threads[i] = new Thread(() => oneMonkeyType());
+        {
+            threads[i] = new Thread(() => oneMonkeyType(monkeyCount, targetString));
             threads[i].Start();
         }
     }
-
     private void Update()
     {
         if (!RunOnMainThread.IsEmpty)
@@ -76,7 +85,7 @@ public class InfiniteMonkey : MonoBehaviour
         }
     }
 
-    void oneMonkeyType()
+    void oneMonkeyType(int monkeyCount, string targetString)
     {        
         var stopwatch = new Stopwatch();
         stopwatch.Start();
@@ -86,10 +95,10 @@ public class InfiniteMonkey : MonoBehaviour
         System.Random rand = new System.Random(seed);
         
         int typeTime = 0;        
-        for (int i = 0; i < Target.Length; i += 0)
+        for (int i = 0, len = targetString.Length; i < len; i += 0)
         {
             char aphba = list[rand.Next(0, list.Count)];
-            if (aphba == Target[i])
+            if (aphba == targetString[i])
             {
                 i++;
             }
@@ -101,12 +110,13 @@ public class InfiniteMonkey : MonoBehaviour
         }
         
         stopwatch.Stop();
-        RunOnMainThread.Enqueue(() => GetTypeCorrectMonkey(typeTime, stopwatch.Elapsed.TotalSeconds, seed));        
+        RunOnMainThread.Enqueue(() => GetTypeCorrectMonkey(
+            monkeyCount, targetString, typeTime, stopwatch.Elapsed.TotalSeconds, seed));        
     }
 
-    void GetTypeCorrectMonkey(int typeTime, double time, int seed)
+    void GetTypeCorrectMonkey(int monkeyCount, string targetString, int typeTime, double time, int seed)
     {
-        DLog.Log($"[seed : {seed}][{Target} : {time}][typeTime: {typeTime}]");
+        DLog.Log($"[seed : {seed}][{targetString} : {time}][typeTime: {typeTime}]");
         typeTimes.Add(typeTime);
         minTypeTime = Mathf.Min(minTypeTime, typeTime);
         maxTypeTime = Mathf.Max(maxTypeTime, typeTime);
@@ -121,8 +131,13 @@ public class InfiniteMonkey : MonoBehaviour
                 total += item;
             }
 
-            DLog.Log($"[REPORT][minTypeTime: {minTypeTime}][maxTypeTime: {maxTypeTime}]");
-            DLog.Log($"[REPORT][{(float)total / monkeyCount}/{Mathf.Pow(list.Count, Target.Length)}]");
+            string log = $"[REPORT][minTypeTime: {minTypeTime}][maxTypeTime: {maxTypeTime}]";
+            log += $"\n[REPORT][{(float)total / monkeyCount}/{Mathf.Pow(list.Count, targetString.Length)}]";
+
+            CallBack?.Invoke(log);
+            CallBack = null;
+
+            DLog.Log(log);            
         }
     }
 

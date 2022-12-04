@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Test/InfiniteMonkey/InfiniteMonkey.unity
+    guid: 207a00ee718084730b6525ffb4bbfaeb
+  - enabled: 1
     path: Assets/Test/PingPong/PingPong.unity
     guid: 78f23d1a1fd784af08f0a76e92fdd905
   - enabled: 1
