@@ -11,6 +11,25 @@ public class MatrixTest : MonoBehaviour
 
     public Vector3 rotVector;
 
+    [ContextMenu("DotTest")]
+    void dotTest()
+    {
+        Debug.Log("Dot = " + Vector3.Dot(startPos, endPos));
+
+        var dot = startPos.x * endPos.x + startPos.y * endPos.y + startPos.z * endPos.z;
+        Debug.Log("Dot = " + dot);
+    }
+
+    [ContextMenu("CrossTest")]
+    void crossTest()
+    {
+        Debug.Log("Cross = " + Vector3.Cross(startPos, endPos));
+
+        //return new Vector3 (lhs.y * rhs.z - lhs.z * rhs.y, lhs.z * rhs.x - lhs.x * rhs.z, lhs.x * rhs.y - lhs.y * rhs.x);
+        var dot = startPos.x * endPos.x + startPos.y * endPos.y + startPos.z * endPos.z;
+        Debug.Log("Cross = " + dot);
+    }
+
     [ContextMenu("RotateVector")]
     void RotateVector()
     {
