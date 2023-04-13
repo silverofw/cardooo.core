@@ -32,7 +32,7 @@ namespace cardooo.core
             DLog.Log("[BAG] Clear All!");
         }
 
-        int GetItemByUID(int uid, out Item target)
+        public int GetItemByUID(int uid, out Item target)
         {
             target = null;
             int index = 0;
@@ -48,7 +48,7 @@ namespace cardooo.core
             return index;
         }
 
-        int GetItemByType(int typeIndex, out Item target)
+        public int GetItemByType(int typeIndex, out Item target)
         {
             target = null;
             int index = 0;
