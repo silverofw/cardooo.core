@@ -14,9 +14,9 @@ namespace cardooo.core
         /// </summary>
         public Dictionary<int, ItemParameter> parameters = new Dictionary<int, ItemParameter>();
 
-        public int UID { get { return parameters[UID_INDEX].intValue; } set { parameters[UID_INDEX].intValue = value; } }
-        public int TypeIndex { get { return parameters[TYPE_INDEX].intValue; } set { parameters[TYPE_INDEX].intValue = value; } }
-        public int Quentity { get { return parameters[QUENTITY_INDEX].intValue; } set { parameters[QUENTITY_INDEX].intValue = value; } }
+        public int UID { get { return parameters[UID_INDEX].intValue; } }
+        public int TypeIndex { get { return parameters[TYPE_INDEX].intValue; } }
+        public int Quentity { get { return parameters[QUENTITY_INDEX].intValue; } set { parameters[QUENTITY_INDEX].update(value); } }
 
         public Item(int uid, int typeIndex, int quentity = 1)
         {
@@ -32,8 +32,8 @@ namespace cardooo.core
             {
                 if (p == "")
                     continue;
-                string[] param = p.Split(':');
-                parameters.Add(int.Parse(param[0]), new ItemParameter(param));
+                string[] param = p.Split(':');                
+                parameters.Add(int.Parse(param[0]), new ItemParameter(int.Parse(param[1]), param[2]));
             }
         }
 

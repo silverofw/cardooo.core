@@ -8,7 +8,8 @@ namespace cardooo.core
     {
         public GoldItem(int uid,int typeIndex, int quentity = 1) : base(uid, typeIndex, quentity)
         {
-
+            int msgIndex = 10;
+            parameters.Add(msgIndex, new ItemParameter("GOLD"));
         }        
     }
 }
