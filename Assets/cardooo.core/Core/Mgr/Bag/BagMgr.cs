@@ -64,9 +64,9 @@ namespace cardooo.core
             return index;
         }
 
-        public void AddItem(int uid, Item newItem)
+        public void AddItem(Item newItem)
         {
-            int index = GetItemByUID(uid, out Item target);
+            int index = GetItemByUID(newItem.UID, out Item target);
 
             if (target == null)
             {
