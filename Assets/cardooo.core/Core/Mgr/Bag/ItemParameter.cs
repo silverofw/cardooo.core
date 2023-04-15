@@ -57,7 +57,43 @@ namespace cardooo.core
             intValue = value;
             return true;
         }
+        public bool update(int[] value)
+        {
+            if (Type != BagParamType.INT_ARR)
+                return false;
+            intArrayValue = value;
+            return true;
+        }
 
+        public bool update(float value)
+        {
+            if (Type != BagParamType.FLOAT)
+                return false;
+            floatValue = value;
+            return true;
+        }
+        public bool update(float[] value)
+        {
+            if (Type != BagParamType.FLOAT_ARR)
+                return false;
+            floatArrayValue = value;
+            return true;
+        }
+
+        public bool update(string value)
+        {
+            if (Type != BagParamType.STRING)
+                return false;
+            stringValue = value;
+            return true;
+        }
+        public bool update(string[] value)
+        {
+            if (Type != BagParamType.STRING_ARR)
+                return false;
+            stringArrayValue = value;
+            return true;
+        }
 
         public string ToPrefsString()
         {
