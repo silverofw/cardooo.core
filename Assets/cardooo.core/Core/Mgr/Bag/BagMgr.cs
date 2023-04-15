@@ -48,7 +48,7 @@ namespace cardooo.core
             return index;
         }
 
-        public int GetItemByType(int typeIndex, out Item target)
+        public int GetItemByType<T>(int typeIndex, out T target) where T : Item
         {
             target = null;
             int index = 0;
@@ -56,12 +56,24 @@ namespace cardooo.core
             {
                 if (i.TypeIndex == typeIndex)
                 {
-                    target = i;
+                    target = i as T;
                     break;
                 }
                 index++;
             }
             return index;
+        }
+
+        public void GetItemByType<T>(int typeIndex, out List<T> targets)where T : Item
+        {
+            targets = new List<T>();            
+            foreach (var i in Items)
+            {
+                if (i.TypeIndex == typeIndex)
+                {
+                    targets.Add(i as T);                    
+                }                
+            }            
         }
 
         public void AddItem(Item newItem)
