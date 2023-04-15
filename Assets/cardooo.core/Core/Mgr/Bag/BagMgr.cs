@@ -145,7 +145,7 @@ namespace cardooo.core
             }
         }
 
-        void save(Item item)
+        public void save(Item item)
         {
             DLog.Log($"[SAVE][BAG_{item.BagIndex}] {item.ToPrefsString()}");
             PlayerPrefs.SetString($"BAG_{item.BagIndex}", item.ToPrefsString());
