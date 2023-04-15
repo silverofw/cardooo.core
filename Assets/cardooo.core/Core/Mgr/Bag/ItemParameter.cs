@@ -102,15 +102,42 @@ namespace cardooo.core
                 case BagParamType.INT:
                     return $"{typeIndex}:{intValue}";
                 case BagParamType.INT_ARR:
-                    return $"{typeIndex}:{intArrayValue}";
+                    var arrStr = "";
+                    for (int i = 0,len = intArrayValue.Length; i<len; i++)
+                    {
+                        arrStr += intArrayValue[i];
+                        if (i != len - 1)
+                        {
+                            arrStr += ';';
+                        }
+                    }
+                    return $"{typeIndex}:{arrStr}";
                 case BagParamType.FLOAT:
                     return $"{typeIndex}:{floatValue}";
                 case BagParamType.FLOAT_ARR:
-                    return $"{typeIndex}:{floatArrayValue}";
+                    arrStr = "";
+                    for (int i = 0, len = floatArrayValue.Length; i < len; i++)
+                    {
+                        arrStr += floatArrayValue[i];
+                        if (i != len - 1)
+                        {
+                            arrStr += ';';
+                        }
+                    }
+                    return $"{typeIndex}:{arrStr}";
                 case BagParamType.STRING:
                     return $"{typeIndex}:{stringValue}";
                 case BagParamType.STRING_ARR:
-                    return $"{typeIndex}:{stringArrayValue}";
+                    arrStr = "";
+                    for (int i = 0, len = stringArrayValue.Length; i < len; i++)
+                    {
+                        arrStr += stringArrayValue[i];
+                        if (i != len - 1)
+                        {
+                            arrStr += ';';
+                        }
+                    }
+                    return $"{typeIndex}:{arrStr}";                    
                 default:
                     DLog.LogError($"wrong type {typeIndex}");
                     return "";
@@ -129,7 +156,7 @@ namespace cardooo.core
                 case BagParamType.INT_ARR:
                     var arr = valueStr.Split(';');
                     intArrayValue = new int[arr.Length];
-                    for (int i = 0, len = arr.Length; i < 0; i++)
+                    for (int i = 0, len = arr.Length; i < len; i++)
                     {
                         intArrayValue[i] = int.Parse(arr[i]);
                     }
@@ -140,7 +167,7 @@ namespace cardooo.core
                 case BagParamType.FLOAT_ARR:
                     arr = valueStr.Split(';');
                     floatArrayValue = new float[arr.Length];
-                    for (int i = 0, len = arr.Length; i < 0; i++)
+                    for (int i = 0, len = arr.Length; i < len; i++)
                     {
                         floatArrayValue[i] = float.Parse(arr[i]);
                     }

@@ -10,6 +10,7 @@ namespace cardooo.core
         {
             int msgIndex = 10;
             parameters.Add(msgIndex, new ItemParameter("GOLD"));
+            parameters.Add(11, new ItemParameter(new int[] { 111, 222, 333 }));
         }        
     }
 }
