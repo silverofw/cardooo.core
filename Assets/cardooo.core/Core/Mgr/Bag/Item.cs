@@ -8,6 +8,7 @@ namespace cardooo.core
         protected const int UID_INDEX = 0;
         protected const int TYPE_INDEX = 1;
         protected const int QUENTITY_INDEX = 2;
+        protected const int BAG_INDEX = 3;
 
         /// <summary>
         /// parameterIndex,value
@@ -16,13 +17,23 @@ namespace cardooo.core
 
         public int UID { get { return parameters[UID_INDEX].intValue; } }
         public int TypeIndex { get { return parameters[TYPE_INDEX].intValue; } }
-        public int Quentity { get { return parameters[QUENTITY_INDEX].intValue; } set { parameters[QUENTITY_INDEX].update(value); } }
+        public int Quentity
+        {
+            get { return parameters[QUENTITY_INDEX].intValue; }
+            set { parameters[QUENTITY_INDEX].update(value); }
+        }
+        public int BagIndex
+        {
+            get { return parameters[BAG_INDEX].intValue; }
+            set { parameters[BAG_INDEX].update(value); }
+        }
 
         public Item(int uid, int typeIndex, int quentity = 1)
         {
             parameters.Add(UID_INDEX, new ItemParameter(uid));
             parameters.Add(TYPE_INDEX, new ItemParameter(typeIndex));
             parameters.Add(QUENTITY_INDEX, new ItemParameter(quentity));
+            parameters.Add(BAG_INDEX, new ItemParameter(-1));
         }
 
         public Item(string info)

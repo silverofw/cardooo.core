@@ -10,7 +10,7 @@ public class BagTest : MonoBehaviour
     [ContextMenu("Start")]
     void Start()
     {
-        BagMgr.Instance.AddItem(new GoldItem(uid, goldIndex,1));
+        BagMgr.Instance.AddItem(new GoldItem(uid, goldIndex, 1));
     }
 
     [ContextMenu("Add")]

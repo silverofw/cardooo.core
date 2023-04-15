@@ -32,26 +32,22 @@ namespace cardooo.core
             DLog.Log("[BAG] Clear All!");
         }
 
-        public int GetItemByUID(int uid, out Item target)
+        public void GetItemByUID(int uid, out Item target)
         {
-            target = null;
-            int index = 0;
+            target = null;            
             foreach (var i in Items)
             {
                 if (i.UID == uid)
                 {
                     target = i;
                     break;
-                }
-                index++;
-            }
-            return index;
+                }             
+            }            
         }
 
-        public int GetItemByType<T>(int typeIndex, out T target) where T : Item
+        public void GetItemByType<T>(int typeIndex, out T target) where T : Item
         {
-            target = null;
-            int index = 0;
+            target = null;            
             foreach (var i in Items)
             {
                 if (i.TypeIndex == typeIndex)
@@ -59,42 +55,42 @@ namespace cardooo.core
                     target = i as T;
                     break;
                 }
-                index++;
             }
-            return index;
         }
 
         public void GetItemByType<T>(int typeIndex, out List<T> targets)where T : Item
         {
-            targets = new List<T>();            
+            targets = new List<T>();
             foreach (var i in Items)
             {
                 if (i.TypeIndex == typeIndex)
                 {
                     targets.Add(i as T);                    
-                }                
-            }            
+                }
+            }
         }
 
         public void AddItem(Item newItem)
         {
-            int index = GetItemByUID(newItem.UID, out Item target);
+            GetItemByUID(newItem.UID, out Item target);
 
             if (target == null)
             {
-                target = newItem;                
-                Items.Add(newItem);
+                target = newItem;
+
+                target.BagIndex = Items.Count;
+                Items.Add(target);
             }
             else
             {
                 target.Quentity += newItem.Quentity;
             }
-            save(index, target);
+            save(target);
         }
 
         public bool AddItemByType(int typeIndex, int quentity)
         {            
-            int index = GetItemByType(typeIndex, out Item target);
+            GetItemByType(typeIndex, out Item target);
 
             if (target == null)
             {
@@ -104,14 +100,14 @@ namespace cardooo.core
             else
             {
                 target.Quentity += quentity;
-                save(index, target);
+                save(target);
                 return true;
             }
         }
 
         public bool UseItem(int uid, int quentity)
         {
-            int index = GetItemByUID(uid, out Item target);
+            GetItemByUID(uid, out Item target);
 
             if (target == null)
             {
@@ -124,14 +120,14 @@ namespace cardooo.core
                     return false;
 
                 target.Quentity -= quentity;
-                save(index, target);
+                save(target);
                 return true;
             }
         }
 
         public bool UseItemByType(int typeIndex, int quentity)
         {
-            int index = GetItemByType(typeIndex, out Item target);
+            GetItemByType(typeIndex, out Item target);
 
             if (target == null)
             {
@@ -144,15 +140,15 @@ namespace cardooo.core
                     return false;
 
                 target.Quentity -= quentity;
-                save(index, target);
+                save(target);
                 return true;
             }
         }
 
-        void save(int index, Item item)
+        void save(Item item)
         {
-            DLog.Log($"[SAVE][BAG_{index}] {item.ToPrefsString()}");
-            PlayerPrefs.SetString($"BAG_{index}", item.ToPrefsString());
+            DLog.Log($"[SAVE][BAG_{item.BagIndex}] {item.ToPrefsString()}");
+            PlayerPrefs.SetString($"BAG_{item.BagIndex}", item.ToPrefsString());
         }
 
         void Load()
