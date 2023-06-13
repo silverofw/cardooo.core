@@ -18,6 +18,7 @@ public class GUIStats : MonoBehaviour
     bool IsShowMem = false;
     bool IsShowScreen = false;
     bool IsShowSysInfo = false;
+    bool IsShowApplicationInfo = false;
 
     void Start()
     {
@@ -64,6 +65,17 @@ public class GUIStats : MonoBehaviour
         sysinfo = sb.ToString();
     }
 
+    private void Update()
+    {
+        fpsCounter++;
+        if (Time.realtimeSinceStartup - lastUpdateFpsTime >= updateFpsInterval)
+        {
+            FPS = fpsCounter / updateFpsInterval;
+            lastUpdateFpsTime = Time.realtimeSinceStartup;
+            fpsCounter = 0;
+        }
+    }
+
     void OnGUI()
     {
         windowRect.width = 150;
@@ -82,6 +94,8 @@ public class GUIStats : MonoBehaviour
             DrawScreen();
         if (IsShowSysInfo)
             DrawSysInfo();
+        if (IsShowApplicationInfo) 
+            DrawApplicationInfo();
         DrawBottom();
         GUILayout.EndVertical();
         GUI.DragWindow();
@@ -93,18 +107,26 @@ public class GUIStats : MonoBehaviour
         IsShowMem = GUILayout.Toggle(IsShowMem, "内存信息");
         IsShowScreen = GUILayout.Toggle(IsShowScreen, "屏幕信息");
         IsShowSysInfo = GUILayout.Toggle(IsShowSysInfo, "設備信息");
+        IsShowApplicationInfo = GUILayout.Toggle(IsShowApplicationInfo, "項目信息");
         GUILayout.EndHorizontal();
     }
+
+    float FPS;//帧率
+    float updateFpsInterval = 1;//更新帧率的间隔
+    float fpsCounter;//fps计数器
+    float lastUpdateFpsTime;//上一次更新帧率的时间
 
     private void DrawFPS()
     {
         GUILayout.BeginHorizontal();
-        GUILayout.Label("FPS: " + (int)(1 / Time.deltaTime), fpsStyle);
+        //GUILayout.Label("FPS: " + (int)(1 / Time.deltaTime), fpsStyle);
+        GUILayout.Label($"FPS: {FPS}", fpsStyle);
+
         if (Profiler.supported)
         {
             long TotalAllocatedMemory = Profiler.GetTotalAllocatedMemoryLong() / 1024 / 1024; //"MB"
             int systemMemorySize = SystemInfo.systemMemorySize;
-            GUILayout.Label("Mem: " + TotalAllocatedMemory + "/" + systemMemorySize + "MB", fpsStyle);
+            GUILayout.Label("Mem: " + TotalAllocatedMemory + " / " + systemMemorySize + "MB", fpsStyle);
         }
         GUILayout.EndHorizontal();
     }
@@ -116,8 +138,8 @@ public class GUIStats : MonoBehaviour
             long TotalReservedMemory = Profiler.GetTotalReservedMemoryLong() / 1024 / 1024; //"MB"
             long TotalAllocatedMemory = Profiler.GetTotalAllocatedMemoryLong() / 1024 / 1024; //"MB"
             long TotalUnusedReservedMemory = Profiler.GetTotalUnusedReservedMemoryLong() / 1024 / 1024; //"MB"
-            long MonoHeapSize = Profiler.GetMonoHeapSizeLong() / 1024 / 1024; //"MB"
-            long MonoUsedSize = Profiler.GetMonoUsedSizeLong() / 1024 / 1024; //"MB"
+            long MonoHeapSize = (Profiler.GetMonoHeapSizeLong() >> 10) / 1024; //"MB"
+            long MonoUsedSize = (Profiler.GetMonoUsedSizeLong() >> 10) / 1024; //"MB"
             long TempAllocatorSize = Profiler.GetTempAllocatorSize() / 1024 / 1024; //"MB"
 
             GUILayout.Label("TotalReservedMemory: " + TotalReservedMemory + "MB", memStyle);
@@ -141,5 +163,15 @@ public class GUIStats : MonoBehaviour
     private void DrawSysInfo()
     {
         GUILayout.Box(sysinfo, sysStyle);
+    }
+
+    private void DrawApplicationInfo()
+    {
+        GUILayout.Label("項目名稱：" + Application.productName);
+        GUILayout.Label("項目包名：" + Application.identifier);
+        GUILayout.Label("項目版本：" + Application.version);
+        GUILayout.Label("Unity版本：" + Application.unityVersion);
+        GUILayout.Label("公司名稱：" + Application.companyName);
+        GUILayout.Label("項目平台：" + Application.platform);
     }
 }
