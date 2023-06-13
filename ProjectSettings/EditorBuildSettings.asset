@@ -11,10 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Test/PingPong/PingPong.unity
     guid: 78f23d1a1fd784af08f0a76e92fdd905
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scene/OPEN.unity
     guid: 50e465cf683a6ca4898b483e77b07cbb
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scene/LOBY.unity
     guid: 7a292f4ab300443f4bf434091f88ff4b
   m_configObjects: {}
